@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	va_list args;
 	int count = 0, digit, sign, len, num, i;
 	char buffer[20];
-	char c, char *s;
+	char c, *s;
 
 	if (format == NULL)
 		return (-1);
