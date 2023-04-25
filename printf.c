@@ -13,7 +13,8 @@ int _printf(const char *format, ...)
 	va_list args;
 	int count = 0, digit, sign, len, num, i;
 	char buffer[20];
-	char c, *s;
+	char c;
+	char *s;
 
 	if (format == NULL)
 		return (-1);
@@ -25,29 +26,66 @@ int _printf(const char *format, ...)
 	while (*format != '\0')
 	{
 		if (*format == '%')
-		{	format++;
+		{
+			format++;
 			if (*format == '%')
-				putchar('%'), count++;
+			{
+				putchar('%');
+				count++;
+			}
 			else if (*format == 'c')
-				c = (char) va_arg(args, int), putchar(c), count++;
+			{
+				c = (char) va_arg(args, int);
+				putchar(c);
+				count++;
+			}
 			else if (*format == 's')
-			{	s = va_arg(args, char *);
+			{
+				s = va_arg(args, char *);
 				while (*s != '\0')
-					putchar(*s), count++, s++; }
+				{
+					putchar(*s);
+					count++;
+					s++;
+				}
+			}
 			else if (*format == 'd' || *format == 'i')
-			{	num = va_arg(args, int), sign = 1;
+			{
+				num = va_arg(args, int);
+				sign = 1;
 				if (num < 0)
-					sign = -1, num = -num;
+				{
+					sign = -1;
+					num = -num;
+				}
 				len = 0;
-				do {	digit = num % 10, buffer[len] = digit + '0', len++, num /= 10;
+				do {
+					digit = num % 10;
+					buffer[len] = digit + '0';
+					len++;
+					num /= 10;
 				} while (num > 0);
 				if (sign == -1)
-					putchar('-'), count++;
+				{
+					putchar('-');
+					count++;
+				}
 				for (i = len - 1; i >= 0; i--)
-					putchar(buffer[i]), count++; }
-			format++; }
+				{
+					putchar(buffer[i]);
+					count++;
+				}
+			}
+			format++;
+		}
 		else
-			putchar(*format), count++, format++; }
+		{
+			putchar(*format);
+			count++;
+			format++;
+		}
+	}
 	va_end(args);
 	return (count);
 }
+
